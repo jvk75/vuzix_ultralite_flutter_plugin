@@ -1,7 +1,7 @@
 name: vuzix_ultralite_flutter_plugin
 description: Flutter plugin for Vuzix Ultralite SDK, enabling integration with Vuzix smart glasses for text display and device control.
 version: 0.1.0
-homepage: https://github.com/loitsut/vuzix_ultralite_flutter_plugin
+homepage: https://github.com/jvk75/vuzix_ultralite_flutter_plugin
 
 environment:
   sdk: '>=3.2.3 <4.0.0'

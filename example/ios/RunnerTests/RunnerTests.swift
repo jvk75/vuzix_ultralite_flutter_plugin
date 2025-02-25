@@ -3,7 +3,7 @@ import UIKit
 import XCTest
 
 
-@testable import vuzix_z100_plugin
+@testable import vuzix_ultralite_flutter_plugin
 
 // This demonstrates a simple unit test of the Swift portion of this plugin's implementation.
 //
@@ -12,7 +12,7 @@ import XCTest
 class RunnerTests: XCTestCase {
 
   func testGetPlatformVersion() {
-    let plugin = VuzixZ100Plugin()
+    let plugin = VuzixUltralitePlugin()
 
     let call = FlutterMethodCall(methodName: "getPlatformVersion", arguments: [])
 

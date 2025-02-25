@@ -34,7 +34,7 @@ target 'Runner' do
 
   # Add script to copy UltraliteSDK
   script_phase :name => 'Copy UltraliteSDK',
-               :script => 'cp -R "${PODS_ROOT}/../.symlinks/plugins/vuzix_z100_plugin/ios/UltraliteSDK.xcframework" "${BUILT_PRODUCTS_DIR}"',
+               :script => 'cp -R "${PODS_ROOT}/../.symlinks/plugins/vuzix_ultralite_flutter_plugin/ios/UltraliteSDK.xcframework" "${BUILT_PRODUCTS_DIR}"',
                :execution_position => :before_compile
 
   target 'RunnerTests' do
@@ -49,7 +49,7 @@ post_install do |installer|
     # Add framework search paths
     target.build_configurations.each do |config|
       config.build_settings['FRAMEWORK_SEARCH_PATHS'] ||= ['$(inherited)']
-      config.build_settings['FRAMEWORK_SEARCH_PATHS'] << '${PODS_ROOT}/../.symlinks/plugins/vuzix_z100_plugin/ios'
+      config.build_settings['FRAMEWORK_SEARCH_PATHS'] << '${PODS_ROOT}/../.symlinks/plugins/vuzix_ultralite_flutter_plugin/ios'
       config.build_settings['FRAMEWORK_SEARCH_PATHS'] << '${BUILT_PRODUCTS_DIR}'
     end
   end

@@ -1,6 +1,6 @@
-# vuzix_z100_plugin_example
+# vuzix_ultralite_flutter_plugin_example
 
-Demonstrates how to use the vuzix_z100_plugin plugin.
+Demonstrates how to use the vuzix_ultralite_flutter_plugin plugin.
 
 ## Getting Started
 

@@ -1,24 +1,24 @@
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
-import 'vuzix_z100_plugin_method_channel.dart';
+import 'vuzix_ultralite_flutter_plugin_method_channel.dart';
 
-abstract class VuzixZ100PluginPlatform extends PlatformInterface {
-  /// Constructs a VuzixZ100PluginPlatform.
-  VuzixZ100PluginPlatform() : super(token: _token);
+abstract class VuzixUltralitePluginPlatform extends PlatformInterface {
+  /// Constructs a VuzixUltralitePluginPlatform.
+  VuzixUltralitePluginPlatform() : super(token: _token);
 
   static final Object _token = Object();
 
-  static VuzixZ100PluginPlatform _instance = MethodChannelVuzixZ100Plugin();
+  static VuzixUltralitePluginPlatform _instance = MethodChannelVuzixUltralitePlugin();
 
-  /// The default instance of [VuzixZ100PluginPlatform] to use.
+  /// The default instance of [VuzixUltralitePluginPlatform] to use.
   ///
-  /// Defaults to [MethodChannelVuzixZ100Plugin].
-  static VuzixZ100PluginPlatform get instance => _instance;
+  /// Defaults to [MethodChannelVuzixUltralitePlugin].
+  static VuzixUltralitePluginPlatform get instance => _instance;
 
   /// Platform-specific implementations should set this with their own
-  /// platform-specific class that extends [VuzixZ100PluginPlatform] when
+  /// platform-specific class that extends [VuzixUltralitePluginPlatform] when
   /// they register themselves.
-  static set instance(VuzixZ100PluginPlatform instance) {
+  static set instance(VuzixUltralitePluginPlatform instance) {
     PlatformInterface.verifyToken(instance, _token);
     _instance = instance;
   }

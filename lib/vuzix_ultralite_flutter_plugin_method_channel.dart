@@ -1,21 +1,21 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
-import 'vuzix_z100_plugin_platform_interface.dart';
+import 'vuzix_ultralite_flutter_plugin_platform_interface.dart';
 
-/// An implementation of [VuzixZ100PluginPlatform] that uses method channels.
-class MethodChannelVuzixZ100Plugin extends VuzixZ100PluginPlatform {
+/// An implementation of [VuzixUltralitePluginPlatform] that uses method channels.
+class MethodChannelVuzixUltralitePlugin extends VuzixUltralitePluginPlatform {
   /// The method channel used to interact with the native platform.
   @visibleForTesting
-  final methodChannel = const MethodChannel('vuzix_z100_plugin');
+  final methodChannel = const MethodChannel('vuzix_ultralite_flutter_plugin');
 
   /// The event channel for connection state changes
   final EventChannel _connectionStateChannel =
-      const EventChannel('vuzix_z100_plugin/connection_state');
+      const EventChannel('vuzix_ultralite_flutter_plugin/connection_state');
 
   /// The event channel for device events
   final EventChannel _deviceEventsChannel =
-      const EventChannel('vuzix_z100_plugin/device_events');
+      const EventChannel('vuzix_ultralite_flutter_plugin/device_events');
 
   @override
   Future<String?> getPlatformVersion() async {

@@ -10,14 +10,13 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:vuzix_z100_plugin/vuzix_z100_plugin.dart';
+import 'package:vuzix_ultralite_flutter_plugin/vuzix_ultralite_flutter_plugin.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   testWidgets('getPlatformVersion test', (WidgetTester tester) async {
-    final VuzixZ100Plugin plugin = VuzixZ100Plugin();
-    final String? version = await plugin.getPlatformVersion();
+    final String? version = await VuzixUltralitePlugin.getDeviceInfo().toString();
     // The version string depends on the host platform running the test, so
     // just assert that some non-empty string is returned.
     expect(version?.isNotEmpty, true);

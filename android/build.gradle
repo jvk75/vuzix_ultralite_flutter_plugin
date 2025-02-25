@@ -2,14 +2,14 @@ group = "com.loitsut.vuzix_ultralite_flutter_plugin"
 version = "1.0-SNAPSHOT"
 
 buildscript {
-    ext.kotlin_version = "1.8.22"
+    ext.kotlin_version = "1.7.10"
     repositories {
         google()
         mavenCentral()
     }
 
     dependencies {
-        classpath("com.android.tools.build:gradle:8.1.0")
+        classpath("com.android.tools.build:gradle:7.3.0")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
     }
 }
@@ -27,15 +27,15 @@ apply plugin: "kotlin-android"
 
 android {
     namespace = "com.loitsut.vuzix_ultralite_flutter_plugin"
-    compileSdk = 35
+    compileSdkVersion 34
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11
+        jvmTarget = '1.8'
     }
 
     sourceSets {
@@ -44,23 +44,11 @@ android {
     }
 
     defaultConfig {
-        minSdk = 21
+        minSdkVersion 31
     }
 
     dependencies {
-        testImplementation("org.jetbrains.kotlin:kotlin-test")
-        testImplementation("org.mockito:mockito-core:5.0.0")
-        implementation "com.github.Vuzix:ultralite-sdk-android:1.0.0"  
-    }
-
-    testOptions {
-        unitTests.all {
-            useJUnitPlatform()
-            testLogging {
-               events "passed", "skipped", "failed", "standardOut", "standardError"
-               outputs.upToDateWhen {false}
-               showStandardStreams = true
-            }
-        }
+        implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+        implementation 'com.vuzix:ultralite-sdk-android:1.7'
     }
 }

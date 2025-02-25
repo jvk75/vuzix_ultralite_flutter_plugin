@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.BLUETOOTH_SCAN"/>
 
     <application
-        android:label="vuzix_z100_plugin_example"
+        android:label="vuzix_ultralite_flutter_plugin_example"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

@@ -3,7 +3,7 @@ import UltraliteSDK
 import UIKit
 import CoreBluetooth
 
-public class VuzixZ100Plugin: NSObject, FlutterPlugin {
+public class VuzixUltralitePlugin: NSObject, FlutterPlugin {
     private var manager: UltraliteManager?
     private var connectionStateEventSink: FlutterEventSink?
     private var deviceEventsEventSink: FlutterEventSink?
@@ -11,15 +11,15 @@ public class VuzixZ100Plugin: NSObject, FlutterPlugin {
     private var textHandle: Int?
     
     public static func register(with registrar: FlutterPluginRegistrar) {
-        let channel = FlutterMethodChannel(name: "vuzix_z100_plugin", binaryMessenger: registrar.messenger())
-        let instance = VuzixZ100Plugin()
+        let channel = FlutterMethodChannel(name: "vuzix_ultralite_flutter_plugin", binaryMessenger: registrar.messenger())
+        let instance = VuzixUltralitePlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
         
         // Set up event channels for connection state and device events
-        let connectionStateChannel = FlutterEventChannel(name: "vuzix_z100_plugin/connection_state", binaryMessenger: registrar.messenger())
+        let connectionStateChannel = FlutterEventChannel(name: "vuzix_ultralite_flutter_plugin/connection_state", binaryMessenger: registrar.messenger())
         connectionStateChannel.setStreamHandler(instance)
         
-        let deviceEventsChannel = FlutterEventChannel(name: "vuzix_z100_plugin/device_events", binaryMessenger: registrar.messenger())
+        let deviceEventsChannel = FlutterEventChannel(name: "vuzix_ultralite_flutter_plugin/device_events", binaryMessenger: registrar.messenger())
         deviceEventsChannel.setStreamHandler(instance)
     }
     
@@ -117,7 +117,7 @@ public class VuzixZ100Plugin: NSObject, FlutterPlugin {
     }
 }
 
-extension VuzixZ100Plugin: FlutterStreamHandler {
+extension VuzixUltralitePlugin: FlutterStreamHandler {
     public func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
         if let args = arguments as? [String: Any],
            let channel = args["channel"] as? String {
