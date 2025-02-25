@@ -1,0 +1,346 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.0.3 effective-5.10 (swiftlang-6.0.3.1.10 clang-1600.0.30.1)
+// swift-module-flags: -target x86_64-apple-macos11.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-bare-slash-regex -module-name UltraliteSDK
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface
+import Accelerate
+import AppKit
+import CommonCrypto
+import CoreBluetooth
+import CoreGraphics
+import CoreText
+import Foundation
+import Swift
+@_exported import UltraliteSDK
+import UserNotifications
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+import zlib
+extension Foundation.NSNotification.Name {
+  public static let tap: Foundation.Notification.Name
+  public static let led: Foundation.Notification.Name
+  public static let displayTimeout: Foundation.Notification.Name
+  public static let power_button: Foundation.Notification.Name
+  public static let version: Foundation.Notification.Name
+  public static let display_state: Foundation.Notification.Name
+  public static let scrolled: Foundation.Notification.Name
+}
+public class Bindable<T> where T : Swift.Equatable {
+  public func bind(listener: UltraliteSDK.BondListener<T>, shouldFire: Swift.Bool = true)
+  public func fire()
+  public var value: T {
+    get
+    set
+  }
+  public init(_ v: T)
+  public func unbind(listener: UltraliteSDK.BondListener<T>)
+  @objc deinit
+}
+public class BondListener<T> {
+  public typealias Listener = (T) -> Swift.Void
+  public init(listener: @escaping UltraliteSDK.BondListener<T>.Listener)
+  @objc deinit
+}
+public protocol ScrollLayoutDelegate : AnyObject {
+  func scrolled(done: Swift.Bool)
+}
+@_hasMissingDesignatedInitializers public class ScrollLayout {
+  public enum Action : Swift.Int {
+    case scroll
+    case pause
+    case resume
+    case clear
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  weak public var delegate: (any UltraliteSDK.ScrollLayoutDelegate)?
+  final public func config(sliceHeight: Swift.Int, numSlicesVisible: Swift.Int, minSlicePositionVisible: Swift.Int = 0, duration: Swift.Int, autoScroll: Swift.Bool)
+  final public func sendAction(action: UltraliteSDK.ScrollLayout.Action)
+  final public func sendImage(image: CoreGraphics.CGImage, slicePosition: Swift.Int, scrollFirst: Swift.Bool)
+  public func pause()
+  public func resume()
+  public func scroll()
+  public func clear()
+  public func clear(sliceIndex: Swift.Int)
+  @objc deinit
+}
+public protocol AutoScrollerDelegate : AnyObject {
+  func done()
+}
+extension CoreGraphics.CGImage {
+  public func convertTo4ColorGrayScale() -> CoreGraphics.CGImage?
+  public func resizeMaintainAspect(withHeight newHeight: Swift.Int) -> CoreGraphics.CGImage?
+  public func resizeMaintainAspect(withWidth newWidth: Swift.Int) -> CoreGraphics.CGImage?
+  public func resize(withSize size: CoreFoundation.CGSize, maintainAspect: Swift.Bool = true) -> CoreGraphics.CGImage?
+  public func differenceRect(image: CoreGraphics.CGImage) -> CoreFoundation.CGRect?
+  public func roundedCorners(radius: CoreFoundation.CGFloat) -> CoreGraphics.CGImage?
+  public func significantRect() -> CoreFoundation.CGRect?
+  public func slice(sliceHeight: Swift.Int, startFromBottom: Swift.Bool = false) -> [(CoreGraphics.CGImage, CoreFoundation.CGRect)]
+  public func resizeCanvas(size: CoreFoundation.CGSize, origin: CoreFoundation.CGPoint = .zero) -> CoreGraphics.CGImage?
+}
+extension Foundation.NSAttributedString {
+  public func cgImage(_ maxWidth: CoreFoundation.CGFloat = CGFloat(Ultralite.DISPLAY_WIDTH)) -> CoreGraphics.CGImage?
+}
+extension CoreGraphics.CGColor {
+  public static let white: CoreGraphics.CGColor
+}
+extension Foundation.NSNotification.Name {
+  @_documentation(visibility: internal) public static let currentDeviceChange: Foundation.Notification.Name
+}
+@_hasMissingDesignatedInitializers public class UltraliteManager {
+  public static let SDK_VERSION: Swift.Int
+  public enum BluetoothScanResult {
+    case SUCCESS
+    case DISABLED
+    case BLUETOOTH_PERMISSION_NEEDED
+    public static func == (a: UltraliteSDK.UltraliteManager.BluetoothScanResult, b: UltraliteSDK.UltraliteManager.BluetoothScanResult) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public static let shared: UltraliteSDK.UltraliteManager
+  public var isBluetoothEnabled: UltraliteSDK.Bindable<Swift.Bool>
+  public var isScanning: UltraliteSDK.Bindable<Swift.Bool>
+  public var isReady: UltraliteSDK.Bindable<Swift.Bool>
+  public var isLinked: UltraliteSDK.Bindable<Swift.Bool>
+  public var currentDevice: UltraliteSDK.Ultralite? {
+    get
+    set(newState)
+  }
+  public func startScan(callback: @escaping ((CoreBluetooth.CBPeripheral) -> Swift.Void)) -> UltraliteSDK.UltraliteManager.BluetoothScanResult
+  public func stopScan()
+  public func link(device: CoreBluetooth.CBPeripheral, callback: @escaping ((UltraliteSDK.Ultralite?) -> Swift.Void))
+  public func unlink()
+  @objc deinit
+}
+@_documentation(visibility: internal) extension UltraliteSDK.UltraliteManager {
+  public func getBluetoothManager() -> CoreBluetooth.CBCentralManager?
+  public func setBluetoothManger()
+}
+@_documentation(visibility: internal) public enum DeviceState {
+  case bluetoothNotAuthorized
+  case bluetoothOff
+  case scanning
+  case notConnected
+  case connecting
+  case connected
+  case unknown
+  case notBonded
+  case notBondedNoInput
+  case authenticationFailed
+  public static func == (a: UltraliteSDK.DeviceState, b: UltraliteSDK.DeviceState) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+extension Foundation.NSNotification.Name {
+  @_documentation(visibility: internal) public static let deviceStateChanged: Foundation.Notification.Name
+}
+@objc @_hasMissingDesignatedInitializers open class Ultralite : ObjectiveC.NSObject, Foundation.NSCoding {
+  public enum FirmwareError : Swift.Error, Swift.Equatable {
+    case CODE_UNKNOWN_COMMAND(Swift.String)
+    case CODE_FAILED_COMMAND(Swift.String)
+    public static func == (a: UltraliteSDK.Ultralite.FirmwareError, b: UltraliteSDK.Ultralite.FirmwareError) -> Swift.Bool
+  }
+  public enum Layout : Swift.Int, Swift.CaseIterable {
+    case `default`
+    case textBottomLeftAlign
+    case textBottomCenterAlign
+    case navigation
+    case canvas
+    case scroll
+    public init?(rawValue: Swift.Int)
+    public typealias AllCases = [UltraliteSDK.Ultralite.Layout]
+    public typealias RawValue = Swift.Int
+    nonisolated public static var allCases: [UltraliteSDK.Ultralite.Layout] {
+      get
+    }
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  public enum Property : Swift.String, Swift.CaseIterable {
+    case deviceName
+    case brightness
+    case version
+    case fontSize
+    public init?(rawValue: Swift.String)
+    public typealias AllCases = [UltraliteSDK.Ultralite.Property]
+    public typealias RawValue = Swift.String
+    nonisolated public static var allCases: [UltraliteSDK.Ultralite.Property] {
+      get
+    }
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public var batteryLevel: UltraliteSDK.Bindable<Swift.Int> {
+    get
+  }
+  public var batteryChargeStatus: UltraliteSDK.Bindable<Swift.Bool> {
+    get
+  }
+  public var firmwareError: UltraliteSDK.Bindable<UltraliteSDK.Ultralite.FirmwareError?> {
+    get
+  }
+  final public let canvas: UltraliteSDK.Canvas
+  dynamic public static let DISPLAY_WIDTH: Swift.Int
+  dynamic public static let DISPLAY_HEIGHT: Swift.Int
+  public var scrollLayout: UltraliteSDK.ScrollLayout? {
+    get
+  }
+  @_documentation(visibility: internal) public var state: UltraliteSDK.DeviceState {
+    get
+  }
+  public var isPaired: Swift.Bool {
+    get
+  }
+  public var isConnected: UltraliteSDK.Bindable<Swift.Bool>
+  public var peripheral: CoreBluetooth.CBPeripheral? {
+    get
+    set
+  }
+  @_documentation(visibility: internal) @objc required public init?(coder decoder: Foundation.NSCoder)
+  @_documentation(visibility: internal) @objc public func encode(with coder: Foundation.NSCoder)
+  public func getName() -> Swift.String
+  public func getModelIdentifier() -> Swift.String
+  @available(*, deprecated, renamed: "requestControl")
+  public func setLayout(layout: UltraliteSDK.Ultralite.Layout, timeout: Swift.Int, hideStatusBar: Swift.Bool = false)
+  public func requestControl(layout: UltraliteSDK.Ultralite.Layout, timeout: Swift.Int, hideStatusBar: Swift.Bool = false, showTapAnimation: Swift.Bool = false, maxNumTaps: Swift.Int = 0, autoReleaseControlOnDisplayTimeout: Swift.Bool = false) -> Swift.Bool
+  @_documentation(visibility: internal) public func requestControl(layout: UltraliteSDK.Ultralite.Layout, timeout: Swift.Int, hideStatusBar: Swift.Bool = false) -> Swift.Bool
+  public func releaseControl()
+  public func sendText(text: Swift.String)
+  public func sendTextAndImage(text: Swift.String, image: CoreGraphics.CGImage?)
+  public func getIntProperty(_ property: UltraliteSDK.Ultralite.Property) -> Swift.Int64?
+  public func getStringProperty(_ property: UltraliteSDK.Ultralite.Property) -> Swift.String?
+  public func setIntProperty(_ property: UltraliteSDK.Ultralite.Property, value: Swift.Int64)
+  public func setStringProperty(_ property: UltraliteSDK.Ultralite.Property, value: Swift.String)
+  public func sendNotification(title: Swift.String, message: Swift.String) -> Swift.String
+  public func setCustomFontForAllText(font: AppKit.NSFont?)
+  public func screenOff()
+  public func screenOn()
+  public func isVuzixConnectInstalled() -> Swift.Bool
+  public func requestAcknowledgement(_ callback: @escaping (() -> Swift.Void))
+  @objc deinit
+}
+extension UltraliteSDK.Ultralite : UserNotifications.UNUserNotificationCenterDelegate {
+  @objc dynamic public func userNotificationCenter(_ center: UserNotifications.UNUserNotificationCenter, willPresent notification: UserNotifications.UNNotification, withCompletionHandler completionHandler: @escaping (UserNotifications.UNNotificationPresentationOptions) -> Swift.Void)
+  @objc dynamic public func userNotificationCenter(_ center: UserNotifications.UNUserNotificationCenter, didReceive response: UserNotifications.UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Swift.Void)
+}
+extension Foundation.NSNotification.Name {
+  public static let scannedPeripheralChange: Foundation.Notification.Name
+  public static let bluetoothPoweredOn: Foundation.Notification.Name
+}
+@_hasMissingDesignatedInitializers public class Canvas {
+  public enum Color : Swift.Int {
+    case black
+    case dim
+    case mid
+    case white
+    public func toCGColor() -> CoreGraphics.CGColor
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  public enum TextWrapMode : Swift.Int {
+    case `default`
+    case wrap
+    case truncate
+    case scrollBackAndForth
+    case scrollCircular
+    case clip
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  public enum TextAlignment : Swift.Int {
+    case auto
+    case left
+    case center
+    case right
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  public enum Anchor : Swift.Int {
+    case topLeft
+    case topCenter
+    case topRight
+    case bottomLeft
+    case bottomCenter
+    case bottomRight
+    case midLeft
+    case midRight
+    case center
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  final public let WIDTH: Swift.Int
+  final public let HEIGHT: Swift.Int
+  public func drawBackground(image: CoreGraphics.CGImage, x: Swift.Int, y: Swift.Int, shouldCommitImmediately: Swift.Bool = false)
+  public func drawBackgroundTiled(image: CoreGraphics.CGImage, points: [CoreFoundation.CGPoint]? = nil)
+  public func clearBackground()
+  public func clearBackgroundRect(x: Swift.Int, y: Swift.Int, width: Swift.Int, height: Swift.Int)
+  public func drawStaticText(text: Swift.String, font: AppKit.NSFont, color: CoreGraphics.CGColor, x: Swift.Int, y: Swift.Int, maxWidth: Swift.Int = Ultralite.DISPLAY_WIDTH) -> CoreFoundation.CGSize?
+  public func drawStaticTextCentered(attributedString: Foundation.NSAttributedString, x: Swift.Int, y: Swift.Int, maxWidth: Swift.Int = Ultralite.DISPLAY_WIDTH) -> CoreFoundation.CGSize?
+  public func drawStaticText(attributedString: Foundation.NSAttributedString, x: Swift.Int, y: Swift.Int, maxWidth: Swift.Int = Ultralite.DISPLAY_WIDTH) -> CoreFoundation.CGSize?
+  public func drawRect(x: Swift.Int, y: Swift.Int, width: Swift.Int, height: Swift.Int, cornerRadius: Swift.Int, borderWidth: Swift.Int, borderColor: CoreGraphics.CGColor?, fillColor: CoreGraphics.CGColor?)
+  public func drawLine(x1: Swift.Int, y1: Swift.Int, x2: Swift.Int, y2: Swift.Int, lineWidth: Swift.Int, color: CoreGraphics.CGColor)
+  public func createImage(image: CoreGraphics.CGImage, anchor: UltraliteSDK.Canvas.Anchor, xOffset: Swift.Int, yOffset: Swift.Int, isVisible: Swift.Bool) -> Swift.Int?
+  public func updateImage(image: CoreGraphics.CGImage, id: Swift.Int)
+  public func moveImage(id: Swift.Int, x: Swift.Int, y: Swift.Int, duration: Swift.Int = 0) -> Swift.Bool
+  public func removeImage(id: Swift.Int) -> Swift.Bool
+  public func setImageVisible(id: Swift.Int, visible: Swift.Bool) -> Swift.Bool
+  public func createAnimation(images: [CoreGraphics.CGImage], anchor: UltraliteSDK.Canvas.Anchor, xOffset: Swift.Int, yOffset: Swift.Int, duration: Swift.Int, visible: Swift.Bool = true) -> Swift.Bool
+  public func moveAnimation(x: Swift.Int, y: Swift.Int, duration: Swift.Int = 0) -> Swift.Bool
+  public func removeAninimation() -> Swift.Bool
+  public func setAnimationVisible(visible: Swift.Bool) -> Swift.Bool
+  public func createText(text: Swift.String, textAlignment: UltraliteSDK.Canvas.TextAlignment, textColor: UltraliteSDK.Canvas.Color, anchor: UltraliteSDK.Canvas.Anchor, xOffset: Swift.Int, yOffset: Swift.Int, isVisible: Swift.Bool = true, width: Swift.Int = -1, height: Swift.Int = -1, wrapMode: UltraliteSDK.Canvas.TextWrapMode = .default) -> Swift.Int?
+  public func updateText(text: Swift.String, id: Swift.Int)
+  public func moveText(id: Swift.Int, x: Swift.Int, y: Swift.Int, duration: Swift.Int = 0) -> Swift.Bool
+  public func setTextVisible(id: Swift.Int, visible: Swift.Bool) -> Swift.Bool
+  public func removeText(id: Swift.Int) -> Swift.Bool
+  public func clear(shouldClearBackground: Swift.Bool = true)
+  public func commit(callback: (() -> Swift.Void)? = nil)
+  @objc deinit
+}
+@_documentation(visibility: internal) public var logEnabled: Swift.Bool
+extension UltraliteSDK.ScrollLayout.Action : Swift.Equatable {}
+extension UltraliteSDK.ScrollLayout.Action : Swift.Hashable {}
+extension UltraliteSDK.ScrollLayout.Action : Swift.RawRepresentable {}
+extension UltraliteSDK.UltraliteManager.BluetoothScanResult : Swift.Equatable {}
+extension UltraliteSDK.UltraliteManager.BluetoothScanResult : Swift.Hashable {}
+extension UltraliteSDK.DeviceState : Swift.Equatable {}
+extension UltraliteSDK.DeviceState : Swift.Hashable {}
+extension UltraliteSDK.Ultralite.Layout : Swift.Equatable {}
+extension UltraliteSDK.Ultralite.Layout : Swift.Hashable {}
+extension UltraliteSDK.Ultralite.Layout : Swift.RawRepresentable {}
+extension UltraliteSDK.Ultralite.Property : Swift.Equatable {}
+extension UltraliteSDK.Ultralite.Property : Swift.Hashable {}
+extension UltraliteSDK.Ultralite.Property : Swift.RawRepresentable {}
+extension UltraliteSDK.Canvas.Color : Swift.Equatable {}
+extension UltraliteSDK.Canvas.Color : Swift.Hashable {}
+extension UltraliteSDK.Canvas.Color : Swift.RawRepresentable {}
+extension UltraliteSDK.Canvas.TextWrapMode : Swift.Equatable {}
+extension UltraliteSDK.Canvas.TextWrapMode : Swift.Hashable {}
+extension UltraliteSDK.Canvas.TextWrapMode : Swift.RawRepresentable {}
+extension UltraliteSDK.Canvas.TextAlignment : Swift.Equatable {}
+extension UltraliteSDK.Canvas.TextAlignment : Swift.Hashable {}
+extension UltraliteSDK.Canvas.TextAlignment : Swift.RawRepresentable {}
+extension UltraliteSDK.Canvas.Anchor : Swift.Equatable {}
+extension UltraliteSDK.Canvas.Anchor : Swift.Hashable {}
+extension UltraliteSDK.Canvas.Anchor : Swift.RawRepresentable {}

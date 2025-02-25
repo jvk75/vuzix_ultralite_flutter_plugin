@@ -1,0 +1,11 @@
+framework module UltraliteSDK {
+  umbrella header "UltraliteSDK.h"
+  export *
+
+  module * { export * }
+}
+
+module UltraliteSDK.Swift {
+  header "UltraliteSDK-Swift.h"
+  requires objc
+}
